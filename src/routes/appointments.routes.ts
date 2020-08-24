@@ -1,15 +1,14 @@
-import { Router, response } from "express";
-import { v4 } from "uuid";
+import { Router, request, response } from "express";
 import { startOfHour, parseISO, isEqual } from "date-fns";
+import Appointment from "../models/Appointment";
 
 const appointmentsRouter = Router();
 
-interface Appointment {
-  id: string;
-  provider: string;
-  date: Date;
-}
 const appointments: Appointment[] = [];
+
+appointmentsRouter.get("/", (request, response) => {
+  return response.status(200).json(appointments);
+});
 
 appointmentsRouter.post("/", (request, response) => {
   const { provider, date } = request.body;
@@ -23,11 +22,7 @@ appointmentsRouter.post("/", (request, response) => {
       .json({ message: "This appointment is already booked" });
   }
 
-  const appointment = {
-    id: v4(),
-    provider,
-    date: parsedDate,
-  };
+  const appointment = new Appointment(provider, parsedDate);
   appointments.push(appointment);
   return response.json(appointment);
 });
