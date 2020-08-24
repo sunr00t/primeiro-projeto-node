@@ -1,4 +1,4 @@
-import { v4 } from "uuid";
+import * as uuid from "uuid";
 
 class Appointment {
   id: string;
@@ -6,7 +6,7 @@ class Appointment {
   date: Date;
 
   constructor(provider: string, date: Date) {
-    this.id = v4();
+    this.id = uuid.v4();
     this.provider = provider;
     this.date = date;
   }
