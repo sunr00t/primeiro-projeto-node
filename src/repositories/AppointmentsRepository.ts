@@ -7,6 +7,9 @@ class AppointmentsRepository {
   constructor() {
     this.appointments = [];
   }
+  public listAppointments(): Appointment[] {
+    return this.appointments;
+  }
 
   public findByDate(date: Date): Appointment | null {
     const findAppointment = this.appointments.find((appointment) =>
